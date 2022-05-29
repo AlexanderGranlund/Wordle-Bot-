@@ -1,4 +1,4 @@
-from wordle_game import game_start_parameters, guess_match_checker, guess_validater, word_list_converter, bot_parameters
+from wordle_game import game_start_parameters, guess_match_checker, guess_validater, word_list_converter
 from wordle_bot import first_stage, smart_bot_guess
 
 def menu():
@@ -26,36 +26,37 @@ def help():
     else:
         menu()
 
-def game_start():
-    length_of_words = length_of_word()
+def game_start():     
+    length_of_words =  5 #length_of_word()
     parameters_dict = game_start_parameters(length_of_words)
     while parameters_dict["guess_count"] < 6:
         if parameters_dict["guess_count"] == 0:
             guess = first_stage(parameters_dict)
-            print(guess)
+            #print(guess)
         else:
-            bot_word_list = bot_parameters(parameters_dict)
-            guess = smart_bot_guess(parameters_dict, bot_word_list, guess)
-            print(guess)
+            guess = smart_bot_guess(parameters_dict, guess)
+            #print(guess)
         #guess = input("\n\nGive your best guess:\n\n").lower()
         if guess_validater(guess, parameters_dict) == True:
             if guess_match_checker(parameters_dict, guess) == True:
-                print("You guessed correctly\n\nYou Win!\n\n\n\n")
-                go_back = input("Please press Enter to continue:") 
-                if go_back == go_back:
-                    menu()
-            else: 
-                print(guess_match_checker(parameters_dict, guess))
+                #print("You guessed correctly\n\nYou Win!\n\n" + "You used " + str(parameters_dict["guess_count"]) + " guessess\n\n\n\n")
+                #go_back = input("Please press Enter to continue:") 
+                #if go_back == go_back:
+                    #menu()
+                return True
+            #else: 
+                #print(guess_match_checker(parameters_dict, guess))
         else:
             print("The Word you guessed isn't in our word list or an uncorrect length")
             print("Try again and guess a " + str(parameters_dict["length_of_words"]) + " letter word\n\n")
             go_back = input("Press Enter to continue:")
-    print("\n\n\n\nGame Over!\n\nYou ran out of guesses!\n\nThe correct word was " + str(parameters_dict["picked_word"]))
-    go_back = input("Please press Enter to continue:") 
-    if go_back == "":
-        menu() 
-    else:
-        menu()    
+    #print("\n\n\n\nGame Over!\n\nYou ran out of guesses!\n\nThe correct word was " + str(parameters_dict["picked_word"]))
+    return False
+    #go_back = input("Please press Enter to continue:") 
+    #if go_back == "":
+        #menu() 
+    #else:
+        #menu()    
 
 def length_of_word():
     received_int = False
@@ -67,4 +68,12 @@ def length_of_word():
             pass
     return length_of_words 
 
-menu()
+counter = 0
+for i in range(1000):
+    if game_start() == True:
+        counter += 1
+    print(i)
+percent = (counter/1000)*100
+
+print(str(percent) + "%")
+

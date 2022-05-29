@@ -26,10 +26,6 @@ def game_start_parameters(length_of_words):
     parameters_dict = {"length_of_words":length_of_words, "guess_count":guess_count,"game_word_list":game_word_list, "picked_word":picked_word}
     return parameters_dict
 
-def bot_parameters(parameters_dict):
-    bot_word_list = parameters_dict["game_word_list"].copy()
-    return bot_word_list
-
 def guess_validater(guess, parameters_dict):
     if len(guess) == parameters_dict["length_of_words"]:
         if guess in parameters_dict["game_word_list"]:
